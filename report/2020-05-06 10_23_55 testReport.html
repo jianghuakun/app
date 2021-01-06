@@ -1,0 +1,2543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+    a.popup_link:hover {
+        color: red;
+    }
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>测试报告</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2020-05-06 10:23:55</p>
+<p class='attribute'><strong>运行时长:</strong> 0:07:47.039887</p>
+<p class='attribute'><strong>状态:</strong> 通过 126 失败 5 错误 1</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'>测试执行情况</p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='errorClass'>
+        <td>unittest.loader._FailedTest</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td><a href="javascript:showClassDetail('c1',1)">详情</a></td>
+    </tr>
+
+<tr id='ft1.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test1</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
+        错误</a>
+    <div id='div_ft1.1' class="popup_window">
+        <pre>ft1.1: ImportError: Failed to import test module: test1
+Traceback (most recent call last):
+  File "D:\python\python36-64\lib\unittest\loader.py", line 428, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "D:\python\python36-64\lib\unittest\loader.py", line 369, in _get_module_from_name
+    __import__(name)
+  File "D:\python\python36-64\project\app\test1.py", line 10, in &lt;module&gt;
+    driver.switch_to_iframe('x-URS-iframe')  #需先跳转到iframe框架
+AttributeError: 'WebDriver' object has no attribute 'switch_to_iframe'
+
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>test_1_createfootabll_xpath.createfootball: app创建足球比赛</td>
+        <td>72</td>
+        <td>72</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c2',72)">详情</a></td>
+    </tr>
+
+<tr id='pt2.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.1')" >
+        通过</a>
+    <div id='div_pt2.1' class="popup_window">
+        <pre>pt2.1: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.2')" >
+        通过</a>
+    <div id='div_pt2.2' class="popup_window">
+        <pre>pt2.2: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击创建活动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.3')" >
+        通过</a>
+    <div id='div_pt2.3' class="popup_window">
+        <pre>pt2.3: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击footballPASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.4')" >
+        通过</a>
+    <div id='div_pt2.4' class="popup_window">
+        <pre>pt2.4: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击host_namePASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.5')" >
+        通过</a>
+    <div id='div_pt2.5' class="popup_window">
+        <pre>pt2.5: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击playteam1PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.6')" >
+        通过</a>
+    <div id='div_pt2.6' class="popup_window">
+        <pre>pt2.6: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击guestteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.7')" >
+        通过</a>
+    <div id='div_pt2.7' class="popup_window">
+        <pre>pt2.7: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='guest_name select pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.8')" >
+        通过</a>
+    <div id='div_pt2.8' class="popup_window">
+        <pre>pt2.8: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击exitteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.9' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.9')" >
+        通过</a>
+    <div id='div_pt2.9' class="popup_window">
+        <pre>pt2.9: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击guestteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.10' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.10')" >
+        通过</a>
+    <div id='div_pt2.10' class="popup_window">
+        <pre>pt2.10: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击starttime PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.11' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.11')" >
+        通过</a>
+    <div id='div_pt2.11' class="popup_window">
+        <pre>pt2.11: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击timesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.12' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.12')" >
+        通过</a>
+    <div id='div_pt2.12' class="popup_window">
+        <pre>pt2.12: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击place PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.13' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.13')" >
+        通过</a>
+    <div id='div_pt2.13' class="popup_window">
+        <pre>pt2.13: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.14' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.14')" >
+        通过</a>
+    <div id='div_pt2.14' class="popup_window">
+        <pre>pt2.14: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.15' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.15')" >
+        通过</a>
+    <div id='div_pt2.15' class="popup_window">
+        <pre>pt2.15: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击placesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.16' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.16')" >
+        通过</a>
+    <div id='div_pt2.16' class="popup_window">
+        <pre>pt2.16: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击footballsure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.17' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_1_selectteam: 创建足球比赛界面选择球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.17')" >
+        通过</a>
+    <div id='div_pt2.17' class="popup_window">
+        <pre>pt2.17: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_1_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.18' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.18')" >
+        通过</a>
+    <div id='div_pt2.18' class="popup_window">
+        <pre>pt2.18: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.19' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.19')" >
+        通过</a>
+    <div id='div_pt2.19' class="popup_window">
+        <pre>pt2.19: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击创建活动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.20' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.20')" >
+        通过</a>
+    <div id='div_pt2.20' class="popup_window">
+        <pre>pt2.20: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击footballPASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.21' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.21')" >
+        通过</a>
+    <div id='div_pt2.21' class="popup_window">
+        <pre>pt2.21: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='主队输入PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.22' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.22')" >
+        通过</a>
+    <div id='div_pt2.22' class="popup_window">
+        <pre>pt2.22: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='客队输入PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.23' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.23')" >
+        通过</a>
+    <div id='div_pt2.23' class="popup_window">
+        <pre>pt2.23: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击starttime PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.24' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.24')" >
+        通过</a>
+    <div id='div_pt2.24' class="popup_window">
+        <pre>pt2.24: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击timesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.25' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.25')" >
+        通过</a>
+    <div id='div_pt2.25' class="popup_window">
+        <pre>pt2.25: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击place PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.26' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.26')" >
+        通过</a>
+    <div id='div_pt2.26' class="popup_window">
+        <pre>pt2.26: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.27' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.27')" >
+        通过</a>
+    <div id='div_pt2.27' class="popup_window">
+        <pre>pt2.27: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.28' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.28')" >
+        通过</a>
+    <div id='div_pt2.28' class="popup_window">
+        <pre>pt2.28: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击placesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.29' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.29')" >
+        通过</a>
+    <div id='div_pt2.29' class="popup_window">
+        <pre>pt2.29: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击footballsure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.30' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_2_inputteam: 创建足球比赛界面直接输入球队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.30')" >
+        通过</a>
+    <div id='div_pt2.30' class="popup_window">
+        <pre>pt2.30: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_2_inputteam (test_1_createfootabll_xpath.createfootball) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.31' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.31')" >
+        通过</a>
+    <div id='div_pt2.31' class="popup_window">
+        <pre>pt2.31: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.32' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.32')" >
+        通过</a>
+    <div id='div_pt2.32' class="popup_window">
+        <pre>pt2.32: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击创建活动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.33' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.33')" >
+        通过</a>
+    <div id='div_pt2.33' class="popup_window">
+        <pre>pt2.33: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击footballPASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.34' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.34')" >
+        通过</a>
+    <div id='div_pt2.34' class="popup_window">
+        <pre>pt2.34: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击host_namePASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.35' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.35')" >
+        通过</a>
+    <div id='div_pt2.35' class="popup_window">
+        <pre>pt2.35: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='输入主队名称PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.36' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.36')" >
+        通过</a>
+    <div id='div_pt2.36' class="popup_window">
+        <pre>pt2.36: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='主队简称输入PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.37' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.37')" >
+        通过</a>
+    <div id='div_pt2.37' class="popup_window">
+        <pre>pt2.37: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='输入法切换PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.38' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.38')" >
+        通过</a>
+    <div id='div_pt2.38' class="popup_window">
+        <pre>pt2.38: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='选择华为输入法PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.39' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.39')" >
+        通过</a>
+    <div id='div_pt2.39' class="popup_window">
+        <pre>pt2.39: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='隐藏输入法使确定按钮显示出来PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.40' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.40')" >
+        通过</a>
+    <div id='div_pt2.40' class="popup_window">
+        <pre>pt2.40: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='主队创建新球队PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.41' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.41')" >
+        通过</a>
+    <div id='div_pt2.41' class="popup_window">
+        <pre>pt2.41: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='guest_name select pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.42' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.42')" >
+        通过</a>
+    <div id='div_pt2.42' class="popup_window">
+        <pre>pt2.42: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击exitteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.43' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.43')" >
+        通过</a>
+    <div id='div_pt2.43' class="popup_window">
+        <pre>pt2.43: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击guestteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.44' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.44')" >
+        通过</a>
+    <div id='div_pt2.44' class="popup_window">
+        <pre>pt2.44: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击starttime PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.45' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.45')" >
+        通过</a>
+    <div id='div_pt2.45' class="popup_window">
+        <pre>pt2.45: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击timesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.46' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.46')" >
+        通过</a>
+    <div id='div_pt2.46' class="popup_window">
+        <pre>pt2.46: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击place PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.47' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.47')" >
+        通过</a>
+    <div id='div_pt2.47' class="popup_window">
+        <pre>pt2.47: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.48' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.48')" >
+        通过</a>
+    <div id='div_pt2.48' class="popup_window">
+        <pre>pt2.48: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.49' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.49')" >
+        通过</a>
+    <div id='div_pt2.49' class="popup_window">
+        <pre>pt2.49: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击placesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.50' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.50')" >
+        通过</a>
+    <div id='div_pt2.50' class="popup_window">
+        <pre>pt2.50: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击footballsure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.51' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_3_selectteam: 新增球队界面输入主队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.51')" >
+        通过</a>
+    <div id='div_pt2.51' class="popup_window">
+        <pre>pt2.51: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_3_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.52' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.52')" >
+        通过</a>
+    <div id='div_pt2.52' class="popup_window">
+        <pre>pt2.52: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.53' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.53')" >
+        通过</a>
+    <div id='div_pt2.53' class="popup_window">
+        <pre>pt2.53: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击创建活动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.54' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.54')" >
+        通过</a>
+    <div id='div_pt2.54' class="popup_window">
+        <pre>pt2.54: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击footballPASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.55' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.55')" >
+        通过</a>
+    <div id='div_pt2.55' class="popup_window">
+        <pre>pt2.55: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击host_namePASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.56' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.56')" >
+        通过</a>
+    <div id='div_pt2.56' class="popup_window">
+        <pre>pt2.56: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='输入主队名称PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.57' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.57')" >
+        通过</a>
+    <div id='div_pt2.57' class="popup_window">
+        <pre>pt2.57: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='主队简称输入PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.58' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.58')" >
+        通过</a>
+    <div id='div_pt2.58' class="popup_window">
+        <pre>pt2.58: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='输入法切换PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.59' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.59')" >
+        通过</a>
+    <div id='div_pt2.59' class="popup_window">
+        <pre>pt2.59: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='选择华为输入法PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.60' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.60')" >
+        通过</a>
+    <div id='div_pt2.60' class="popup_window">
+        <pre>pt2.60: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='隐藏输入法使确定按钮显示出来PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.61' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.61')" >
+        通过</a>
+    <div id='div_pt2.61' class="popup_window">
+        <pre>pt2.61: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='主队创建新球队PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.62' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.62')" >
+        通过</a>
+    <div id='div_pt2.62' class="popup_window">
+        <pre>pt2.62: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='guest_name select pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.63' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.63')" >
+        通过</a>
+    <div id='div_pt2.63' class="popup_window">
+        <pre>pt2.63: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击exitteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.64' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.64')" >
+        通过</a>
+    <div id='div_pt2.64' class="popup_window">
+        <pre>pt2.64: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击guestteam PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.65' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.65')" >
+        通过</a>
+    <div id='div_pt2.65' class="popup_window">
+        <pre>pt2.65: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击starttime PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.66' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.66')" >
+        通过</a>
+    <div id='div_pt2.66' class="popup_window">
+        <pre>pt2.66: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击timesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.67' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.67')" >
+        通过</a>
+    <div id='div_pt2.67' class="popup_window">
+        <pre>pt2.67: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击place PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.68' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.68')" >
+        通过</a>
+    <div id='div_pt2.68' class="popup_window">
+        <pre>pt2.68: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.69' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.69')" >
+        通过</a>
+    <div id='div_pt2.69' class="popup_window">
+        <pre>pt2.69: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='滑动选择153测试站点 PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.70' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.70')" >
+        通过</a>
+    <div id='div_pt2.70' class="popup_window">
+        <pre>pt2.70: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击placesure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.71' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.71')" >
+        通过</a>
+    <div id='div_pt2.71' class="popup_window">
+        <pre>pt2.71: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击footballsure PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt2.72' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_createfootball_4_selectteam: 新增球队界面输入客队</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.72')" >
+        通过</a>
+    <div id='div_pt2.72' class="popup_window">
+        <pre>pt2.72: app创建足球比赛开始
+
+SubTestCase Pass:
+test_1_app_createfootball_4_selectteam (test_1_createfootabll_xpath.createfootball) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='failClass'>
+        <td>test_2_web_selenium.test_2_web_ui2: 视频网站登录</td>
+        <td>19</td>
+        <td>18</td>
+        <td>1</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c3',19)">详情</a></td>
+    </tr>
+
+<tr id='pt3.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.1')" >
+        通过</a>
+    <div id='div_pt3.1' class="popup_window">
+        <pre>pt3.1: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='视频模块判断')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.2')" >
+        通过</a>
+    <div id='div_pt3.2' class="popup_window">
+        <pre>pt3.2: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='首页判断')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.3')" >
+        通过</a>
+    <div id='div_pt3.3' class="popup_window">
+        <pre>pt3.3: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='切换首页pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.4')" >
+        通过</a>
+    <div id='div_pt3.4' class="popup_window">
+        <pre>pt3.4: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='最新视频标题pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.5')" >
+        通过</a>
+    <div id='div_pt3.5' class="popup_window">
+        <pre>pt3.5: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='热门视频标题pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.6')" >
+        通过</a>
+    <div id='div_pt3.6' class="popup_window">
+        <pre>pt3.6: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='热门')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.7')" >
+        通过</a>
+    <div id='div_pt3.7' class="popup_window">
+        <pre>pt3.7: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='公开')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.8')" >
+        通过</a>
+    <div id='div_pt3.8' class="popup_window">
+        <pre>pt3.8: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='校园')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.9' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.9')" >
+        通过</a>
+    <div id='div_pt3.9' class="popup_window">
+        <pre>pt3.9: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='登录成功')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.10' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.10')" >
+        通过</a>
+    <div id='div_pt3.10' class="popup_window">
+        <pre>pt3.10: 视频网站测试开始
+0
+用户名密码错误
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_2_web_selenium.test_2_web_ui2) (data='用户名密码错误测试通过')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.11' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.11')" >
+        通过</a>
+    <div id='div_pt3.11' class="popup_window">
+        <pre>pt3.11: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='查询工资')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.12' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.12')" >
+        通过</a>
+    <div id='div_pt3.12' class="popup_window">
+        <pre>pt3.12: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='人事查询')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.13' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.13')" >
+        通过</a>
+    <div id='div_pt3.13' class="popup_window">
+        <pre>pt3.13: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='修改密码')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.14' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.14')" >
+        通过</a>
+    <div id='div_pt3.14' class="popup_window">
+        <pre>pt3.14: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='系统使用说明')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.15' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.15')" >
+        通过</a>
+    <div id='div_pt3.15' class="popup_window">
+        <pre>pt3.15: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='安全退出')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='ft3.16' class='none'>
+    <td class='failCase'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft3.16')" >
+        失败</a>
+    <div id='div_ft3.16' class="popup_window">
+        <pre>ft3.16: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Failed:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data=[{'工资月份': '2020年03月'}, {'部门': '工研院'}, {'姓名': '江华坤'}, {'底薪': '2200'}, {'出勤工时': '32'}, {'总加班小时': '0'}, {'本月出勤底薪': '404.6'}, {'绩效': '0'}, {'加班费': '0'}, {'全勤奖': '0'}, {'津贴': '0'}, {'物价上涨补助': '3231.76'}, {'餐费补贴': '54.5'}, {'话费补贴': '0'}, {'提成': '0'}, {'奖励': '0'}, {'奖金': '0'}, {'补项': '0'}, {'扣房租水电': '0'}, {'安居房房租': '0'}, {'扣药费': '0'}, {'意外保险': '0'}, {'扣互助基金': '5'}, {'扣劳动违约金': '0'}, {'伙食补助': '54.5'}, {'实际消费': '0'}, {'本月结余': '54.5'}, {'扣伙食费': '0'}, {'扣社保费': '0'}, {'扣住房公积金': '0'}, {'扣个税': '0'}, {'其他扣款': '0'}, {'退补税': '0'}, {'应发工资': '3690.86'}, {'实发工资': '3685.86'}, {'申报月份': '0'}, {'子女教育': '0'}, {'父母赡养': '0'}, {'房贷利息': '0'}, {'房屋租金': '0'}, {'继续教育': '0'}])Traceback (most recent call last):
+  File "D:\python\python36-64\project\app\test_2_web_selenium.py", line 230, in test_2_selenium_1_gz
+    self.assertEqual(len(list1), "安全退出", "安全退出")
+AssertionError: 41 != '安全退出' : 安全退出
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.17' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.17')" >
+        通过</a>
+    <div id='div_pt3.17' class="popup_window">
+        <pre>pt3.17: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='用户名密码正确登录成功')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.18' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.18')" >
+        通过</a>
+    <div id='div_pt3.18' class="popup_window">
+        <pre>pt3.18: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='用户名错误测试通过')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt3.19' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_2_selenium_1_gz</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.19')" >
+        通过</a>
+    <div id='div_pt3.19' class="popup_window">
+        <pre>pt3.19: 视频网站测试开始
+用户名密码错误
+
+SubTestCase Pass:
+test_2_selenium_1_gz (test_2_web_selenium.test_2_web_ui2) (data='密码错误测试通过')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>test_3_app_wechart.wechart1: 微信分享</td>
+        <td>25</td>
+        <td>25</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c4',25)">详情</a></td>
+    </tr>
+
+<tr id='pt4.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.1')" >
+        通过</a>
+    <div id='div_pt4.1' class="popup_window">
+        <pre>pt4.1: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.2')" >
+        通过</a>
+    <div id='div_pt4.2' class="popup_window">
+        <pre>pt4.2: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='切换已结束PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.3')" >
+        通过</a>
+    <div id='div_pt4.3' class="popup_window">
+        <pre>pt4.3: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击收藏、复制、分享按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.4')" >
+        通过</a>
+    <div id='div_pt4.4' class="popup_window">
+        <pre>pt4.4: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击分享按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.5')" >
+        通过</a>
+    <div id='div_pt4.5' class="popup_window">
+        <pre>pt4.5: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击分享微信好友PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.6')" >
+        通过</a>
+    <div id='div_pt4.6' class="popup_window">
+        <pre>pt4.6: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击搜索按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.7')" >
+        通过</a>
+    <div id='div_pt4.7' class="popup_window">
+        <pre>pt4.7: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击搜索输入框pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.8')" >
+        通过</a>
+    <div id='div_pt4.8' class="popup_window">
+        <pre>pt4.8: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='输入需要发送的微信号PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.9' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.9')" >
+        通过</a>
+    <div id='div_pt4.9' class="popup_window">
+        <pre>pt4.9: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击选择需要发送的微信PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.10' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.10')" >
+        通过</a>
+    <div id='div_pt4.10' class="popup_window">
+        <pre>pt4.10: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击分享按钮完成微信分享PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.11' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.11')" >
+        通过</a>
+    <div id='div_pt4.11' class="popup_window">
+        <pre>pt4.11: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='微信分享PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.12' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.12')" >
+        通过</a>
+    <div id='div_pt4.12' class="popup_window">
+        <pre>pt4.12: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='返回app pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.13' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_1: 已结束列表界面分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.13')" >
+        通过</a>
+    <div id='div_pt4.13' class="popup_window">
+        <pre>pt4.13: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_1 (test_3_app_wechart.wechart1) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.14' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.14')" >
+        通过</a>
+    <div id='div_pt4.14' class="popup_window">
+        <pre>pt4.14: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.15' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.15')" >
+        通过</a>
+    <div id='div_pt4.15' class="popup_window">
+        <pre>pt4.15: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击收藏、复制、分享按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.16' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.16')" >
+        通过</a>
+    <div id='div_pt4.16' class="popup_window">
+        <pre>pt4.16: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击分享按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.17' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.17')" >
+        通过</a>
+    <div id='div_pt4.17' class="popup_window">
+        <pre>pt4.17: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击分享微信好友PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.18' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.18')" >
+        通过</a>
+    <div id='div_pt4.18' class="popup_window">
+        <pre>pt4.18: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击搜索按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.19' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.19')" >
+        通过</a>
+    <div id='div_pt4.19' class="popup_window">
+        <pre>pt4.19: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击搜索输入框pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.20' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.20')" >
+        通过</a>
+    <div id='div_pt4.20' class="popup_window">
+        <pre>pt4.20: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='输入需要发送的微信号PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.21' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.21')" >
+        通过</a>
+    <div id='div_pt4.21' class="popup_window">
+        <pre>pt4.21: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击选择需要发送的微信PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.22' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.22')" >
+        通过</a>
+    <div id='div_pt4.22' class="popup_window">
+        <pre>pt4.22: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击分享按钮完成微信分享PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.23' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.23')" >
+        通过</a>
+    <div id='div_pt4.23' class="popup_window">
+        <pre>pt4.23: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='微信分享PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.24' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.24')" >
+        通过</a>
+    <div id='div_pt4.24' class="popup_window">
+        <pre>pt4.24: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='返回app pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt4.25' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_wechart_2: 未结束列表分享</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.25')" >
+        通过</a>
+    <div id='div_pt4.25' class="popup_window">
+        <pre>pt4.25: app微信分享开始
+
+SubTestCase Pass:
+test_wechart_2 (test_3_app_wechart.wechart1) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='failClass'>
+        <td>test_4_ali.ali</td>
+        <td>7</td>
+        <td>3</td>
+        <td>4</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c5',7)">详情</a></td>
+    </tr>
+
+<tr id='pt5.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.1')" >
+        通过</a>
+    <div id='div_pt5.1' class="popup_window">
+        <pre>pt5.1: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_4_ali.ali) (data='点击控制台PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='ft5.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft5.2')" >
+        失败</a>
+    <div id='div_ft5.2' class="popup_window">
+        <pre>ft5.2: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Failed:
+test_1_selenium_1_video (test_4_ali.ali) (data='live-iframe')Traceback (most recent call last):
+  File "D:\python\python36-64\project\app\test_4_ali.py", line 39, in test_1_selenium_1_video
+    self.assertEqual(x.get_attribute("id"), 1, "账户密码登录存在Fail")
+AssertionError: 'live-iframe' != 1 : 账户密码登录存在Fail
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='ft5.3' class='none'>
+    <td class='failCase'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft5.3')" >
+        失败</a>
+    <div id='div_ft5.3' class="popup_window">
+        <pre>ft5.3: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Failed:
+test_1_selenium_1_video (test_4_ali.ali) (data='alibaba-login-box')Traceback (most recent call last):
+  File "D:\python\python36-64\project\app\test_4_ali.py", line 39, in test_1_selenium_1_video
+    self.assertEqual(x.get_attribute("id"), 1, "账户密码登录存在Fail")
+AssertionError: 'alibaba-login-box' != 1 : 账户密码登录存在Fail
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='ft5.4' class='none'>
+    <td class='failCase'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft5.4')" >
+        失败</a>
+    <div id='div_ft5.4' class="popup_window">
+        <pre>ft5.4: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Failed:
+test_1_selenium_1_video (test_4_ali.ali) (data='_oid_ifr_')Traceback (most recent call last):
+  File "D:\python\python36-64\project\app\test_4_ali.py", line 39, in test_1_selenium_1_video
+    self.assertEqual(x.get_attribute("id"), 1, "账户密码登录存在Fail")
+AssertionError: '_oid_ifr_' != 1 : 账户密码登录存在Fail
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='ft5.5' class='none'>
+    <td class='failCase'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft5.5')" >
+        失败</a>
+    <div id='div_ft5.5' class="popup_window">
+        <pre>ft5.5: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Failed:
+test_1_selenium_1_video (test_4_ali.ali) (data='账户密码登录存在不存在')Traceback (most recent call last):
+  File "D:\python\python36-64\project\app\test_4_ali.py", line 45, in test_1_selenium_1_video
+    "//div[@class='ability-tabs-item ' and @data-tracker-name='账号密码登录' and @data-spm-click='gostr=/aliyun;locaid=login']").click()
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='ability-tabs-item ' and @data-tracker-name='账号密码登录' and @data-spm-click='gostr=/aliyun;locaid=login']"}
+  (Session info: chrome=80.0.3987.149)
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\python36-64\project\app\test_4_ali.py", line 51, in test_1_selenium_1_video
+    self.assertEqual(0, 1, "账户密码登录存在Fail")
+AssertionError: 0 != 1 : 账户密码登录存在Fail
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt5.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.6')" >
+        通过</a>
+    <div id='div_pt5.6' class="popup_window">
+        <pre>pt5.6: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_4_ali.ali) (data='输入用户名Pass')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt5.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_selenium_1_video</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.7')" >
+        通过</a>
+    <div id='div_pt5.7' class="popup_window">
+        <pre>pt5.7: 阿里云测试开始
+live-iframe
+alibaba-login-box
+_oid_ifr_
+
+SubTestCase Pass:
+test_1_selenium_1_video (test_4_ali.ali) (data='输入密码PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>test_5_app_login.loginapp: app登录测试</td>
+        <td>8</td>
+        <td>8</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c6',8)">详情</a></td>
+    </tr>
+
+<tr id='pt6.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.1')" >
+        通过</a>
+    <div id='div_pt6.1' class="popup_window">
+        <pre>pt6.1: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='APP启动PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.2')" >
+        通过</a>
+    <div id='div_pt6.2' class="popup_window">
+        <pre>pt6.2: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='切换到我的界面PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.3')" >
+        通过</a>
+    <div id='div_pt6.3' class="popup_window">
+        <pre>pt6.3: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='登录注册按钮不存在')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.4')" >
+        通过</a>
+    <div id='div_pt6.4' class="popup_window">
+        <pre>pt6.4: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='点击登录按钮，切换到登录界面PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.5')" >
+        通过</a>
+    <div id='div_pt6.5' class="popup_window">
+        <pre>pt6.5: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='点击密码框并且输入密码PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.6')" >
+        通过</a>
+    <div id='div_pt6.6' class="popup_window">
+        <pre>pt6.6: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='点击登录按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.7')" >
+        通过</a>
+    <div id='div_pt6.7' class="popup_window">
+        <pre>pt6.7: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='点击登录按钮PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt6.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_1_app_login_1: 用户名和密码正确登录测试-登录状态退出再登录</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.8')" >
+        通过</a>
+    <div id='div_pt6.8' class="popup_window">
+        <pre>pt6.8: app登录测试开始
+D:\python\python36-64\lib\site-packages\uiautomator2\session.py:252: Warning: set FastInputIME failed. use "d(focused=True).set_text instead"
+  Warning)
+
+SubTestCase Pass:
+test_1_app_login_1 (test_5_app_login.loginapp) (data='点击appstop PASS')</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>132</td>
+            <td>126</td>
+            <td>5</td>
+            <td>1</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', 'grey', '#b64645'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:126, name:'通过'},
+                        {value:5, name:'失败'},
+                        {value:1, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>
